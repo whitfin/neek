@@ -44,7 +44,8 @@
         "blanket":{
             "pattern":[
                 "lib/neek.js",
-                "lib/reader.js"
+                "lib/reader.js",
+                "lib/stream.js"
             ]
         }
     }

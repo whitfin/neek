@@ -3,7 +3,8 @@ var Mocha = require("mocha");
 // Code coverage
 require("blanket")({
     "pattern":[
-        "lib/UniqueReader.js",
+        "lib/stream.js",
+        "lib/reader.js",
         "lib/neek.js"
     ]
 });
