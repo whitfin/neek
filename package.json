@@ -1,0 +1,51 @@
+{
+    "name":"neek",
+    "version":"0.1.0",
+    "description":"A simple implementation of *nix uniq in NodeJS to take advantage of streaming",
+    "author":{
+        "name":"Isaac Whitfield",
+        "email":"iwhitfield@appcelerator.com"
+    },
+    "repository":{
+        "type":"git",
+        "url":"http://github.com/iwhitfield/neek.git"
+    },
+    "bugs":{
+        "email":"iwhitfield@appcelerator.com",
+        "url":"http://github.com/iwhitfield/neek/issues"
+    },
+    "license":"MIT",
+    "readmeFilename":"README.md",
+    "preferGlobal":true,
+    "keywords":[
+        "duplicate",
+        "uniq",
+        "unique"
+    ],
+    "scripts": {
+        "coverage":"rm -f coverage.html && mocha -r blanket -R html-cov test > coverage.html",
+        "test":"node test.js spec; node test.js | ./node_modules/coveralls/bin/coveralls.js"
+    },
+    "bin":{
+        "neek":"bin/neek.js"
+    },
+    "dependencies":{
+        "hashes":"*",
+        "minimist":"*",
+        "readable-stream":"~1.0.0"
+    },
+    "devDependencies":{
+        "blanket":"*",
+        "coveralls": "*",
+        "mocha":"*",
+        "mocha-lcov-reporter":"0.0.1"
+    },
+    "config": {
+        "blanket":{
+            "pattern":[
+                "lib/neek.js",
+                "lib/reader.js"
+            ]
+        }
+    }
+}
