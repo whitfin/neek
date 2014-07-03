@@ -1,6 +1,6 @@
 {
     "name":"neek",
-    "version":"0.2.0",
+    "version":"0.2.1",
     "description":"A simple implementation of *nix uniq in NodeJS to take advantage of streaming",
     "author":{
         "name":"Isaac Whitfield",
@@ -27,7 +27,7 @@
         "test":"node test.js spec; node test.js | ./node_modules/coveralls/bin/coveralls.js"
     },
     "bin":{
-        "neek":"bin/neek.js"
+        "neek":"bin/neek"
     },
     "dependencies":{
         "hashes":"*",
