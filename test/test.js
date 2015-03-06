@@ -19,7 +19,7 @@ describe('Neek', function(){
 
             new Neek()
                 .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput("string")
+                .setOutput('string')
                 .unique('md5', function(result){
                     assert.strictEqual(result.output, without_dups);
                     next();
@@ -31,7 +31,7 @@ describe('Neek', function(){
 
             new Neek()
                 .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput("string")
+                .setOutput('string')
                 .unique(function(result){
                     assert.strictEqual(result.output, without_dups);
                     next();
@@ -43,7 +43,7 @@ describe('Neek', function(){
 
             new Neek()
                 .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput("string")
+                .setOutput('string')
                 .unique('sha256', function(result){
                     assert.strictEqual(result.output, without_dups);
                     next();
@@ -55,7 +55,7 @@ describe('Neek', function(){
 
             new Neek()
                 .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput("string")
+                .setOutput('string')
                 .unique('sha512', function(result){
                     assert.strictEqual(result.output, without_dups);
                     next();
@@ -71,13 +71,13 @@ describe('Neek', function(){
 
             try {
                 new Neek()
-                    .setOutput("string")
+                    .setOutput('string')
                     .unique('sha512', function (result) {
                         assert.strictEqual(result.output, without_dups);
                         next(new Error('No error thrown!'));
                     });
             } catch(e) {
-                assert(e.message == "No input stream specified!");
+                assert(e.message === 'No input stream specified!');
                 next();
             }
 
@@ -93,7 +93,7 @@ describe('Neek', function(){
                         next(new Error('No error thrown!'));
                     });
             } catch(e) {
-                assert(e.message == "No output format specified!");
+                assert(e.message === 'No output format specified!');
                 next();
             }
 
@@ -128,7 +128,7 @@ describe('Neek', function(){
             exec(cmd + ' --input ' + resource + 'lines_with_dups.txt', function(err, stdout, stderr){
                 assert(!err, err);
                 assert(!stderr);
-                assert.equal(stdout, without_dups + "\nProcessing complete: 13 -> 8\n");
+                assert.equal(stdout, without_dups + '\nProcessing complete: 13 -> 8\n');
                 next();
             });
 

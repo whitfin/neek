@@ -1,4 +1,4 @@
-Neek [![Build Status](https://travis-ci.org/iwhitfield/neek.svg?branch=master)](https://travis-ci.org/iwhitfield/neek) [![Coverage Status](https://coveralls.io/repos/iwhitfield/neek/badge.png)](https://coveralls.io/r/iwhitfield/neek)
+Neek [![Build Status](https://travis-ci.org/iwhitfield/neek.svg?branch=master)](https://travis-ci.org/iwhitfield/neek) [![Code Climate](https://codeclimate.com/github/iwhitfield/neek/badges/gpa.svg)](https://codeclimate.com/github/iwhitfield/neek) [![Test Coverage](https://codeclimate.com/github/iwhitfield/neek/badges/coverage.svg)](https://codeclimate.com/github/iwhitfield/neek)
 ====
 
 A simple way to filter duplicate lines from a list, à la uniq. Takes an input and filters to an output removing duplicates.
@@ -7,12 +7,14 @@ A simple way to filter duplicate lines from a list, à la uniq. Takes an input a
 
 This module is built on each commit with TravisCI on Node 0.8.x, 0.10.x and 0.11.x. It will *not* work on Node 0.6.x unfortunately. In order to maintain support throughout these versions, the [Hashes](https://npmjs.org/package/hashes "Hashes") library is used. There are more efficient alternatives (perhaps a gaining a second per 100,000 records), however they have native components and are unstable on 0.11.x at the moment. At some point in future, I'll revisit this and implement a better HashSet - perhaps when 0.12.x is live.
 
+Build results are sent over to [Code Climate](https://codeclimate.com/github/iwhitfield/neek) for analysis.
+
 ### Setup ###
 
 Depending on your use case, there are two different ways you can install Neek. The first is as a global module, mostly for use when scripting in a shell.
 
 ```
-$ sudo npm install -g neek
+$ npm install -g neek
 ```
 
 You can also install it as a local module in case you wish to use it inside another tool:
