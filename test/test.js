@@ -38,7 +38,7 @@ describe('Neek', function (){
   it('handles with String output', function(next){
     var neek = new Neek({
       input: fs.createReadStream(dup_file),
-      output: '.tmp/first_output_without_dups.txt'
+      output: 'tmp/first_output_without_dups.txt'
     });
 
     neek.unique(function (result){
@@ -55,7 +55,7 @@ describe('Neek', function (){
   it('handles with Stream output', function(next){
     var neek = new Neek({
       input: fs.createReadStream(dup_file),
-      output: fs.createWriteStream('.tmp/second_output_without_dups.txt')
+      output: fs.createWriteStream('tmp/second_output_without_dups.txt')
     });
 
     neek.unique(function (result){
@@ -70,7 +70,7 @@ describe('Neek', function (){
   });
 
   it('functions without a callback', function (start){
-    var path = '.tmp/third_output_without_dups.txt';
+    var path = 'tmp/third_output_without_dups.txt';
 
     var neek = new Neek({
       input: fs.createReadStream(dup_file),

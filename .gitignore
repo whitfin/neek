@@ -31,4 +31,4 @@ coverage.html
 .idea
 
 # tmp files
-.tmp/*.txt
+tmp

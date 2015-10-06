@@ -12,7 +12,14 @@ module.exports = function(grunt) {
     },
     clean: {
       coverage: ['coverage'],
-      tmp: ['.tmp/*.txt']
+      tmp: ['tmp']
+    },
+    mkdir: {
+      tmp: {
+        options: {
+          create: ['tmp']
+        }
+      }
     },
     mocha_istanbul:{
       coverage: {
@@ -57,6 +64,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-codeclimate-reporter');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-mkdir');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
 
@@ -64,6 +72,6 @@ module.exports = function(grunt) {
   grunt.registerTask('coverage', ['clean:coverage','mocha_istanbul:coverage']);
   grunt.registerTask('default', ['clean','lint','test']);
   grunt.registerTask('lint', ['jshint']);
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('test', ['mkdir:tmp','mochaTest']);
 
 };
