@@ -53,15 +53,18 @@ var neek = require('neek);
 var readable = './test/resources/lines_with_dups.txt';
 var writable = './test/resources/output_without_dups.txt';
 
-// unique(input, output[, callback])
 neek.unique(readable, writable, function(result){
   console.log(result);
 });
 ```
 
-You can use the constructor to define your streams. You then call `unique()` to actually remove the duplicate data. `output` can take a parameter "string", which will pass the output to the callback as described below. `unique()` can take an optional callback function which is passed a result object.
+### unique(input, output[, callback])
 
-If you pass a String type to either `input` or `output` (which `!== 'string'`) it will be wrapped up in a read/write stream, with the assumption that it is a file path.
+The unique method is the only method currently available on the `neek` module. You pass in your two Streams and an optional callback.
+
+The `output` parameter can take the value 'string', which will pass the output to the callback in `result.output`, rather than piping it to a stream. The callback to `unique` is optional, but be careful when omitting it in case you're depending on the Stream being written.
+
+If you pass a String type to either `input` or `output` (when output `!== 'string'`) it will be wrapped up in a read/write stream, with the assumption that it is a file path.
 
 This object contains three fields; output, size and count. These fields translate to the following:
 
