@@ -25,6 +25,7 @@ module.exports = function(grunt) {
       coverage: {
         print: 'none',
         quiet: true,
+        ignoreLeaks: true,
         excludes: [
           '**/coverage/**',
           '**/example/**',
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
         slow: 1250,
         timeout: 3000,
         reporter: 'spec',
-        ignoreLeaks: false
+        ignoreLeaks: true
       },
       src: [
         'test/test.js'

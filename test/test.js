@@ -74,6 +74,24 @@ describe('Neek', function (){
     }, 250);
   });
 
+  it('falls back to using a library if non-ES6 is available', function(next){
+    var stored_set = global.Set;
+
+    delete global.Set;
+
+    neek.unique(fs.createReadStream(dup_file), 'string', function (result){
+      should(result).be.ok;
+      should(result.total).be.ok;
+      should(result.unique).be.ok;
+      should(result.total).eql(13);
+      should(result.unique).eql(8);
+
+      global.Set = stored_set;
+
+      next();
+    });
+  });
+
   it('is usable via command line', function (next){
     var child = spawn('./bin/neek', ['--input', dup_file]);
     var data = '';
