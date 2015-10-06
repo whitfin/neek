@@ -1,139 +1,154 @@
-var assert = require('assert'),
-    exec = require('child_process').exec,
-    fs = require('fs'),
-    Neek = require('../index'),
-    path = require('path');
+var fs = require('fs');
+var should = require('should');
+var spawn = require('child_process').spawn;
 
-var without_dups;
+var Neek = require('../index');
 
-describe('Neek', function(){
+var dup_file = './test/resources/lines_with_dups.txt';
 
-    before(function(start){
-        without_dups = fs.readFileSync('./test/resources/lines_without_dups.txt').toString();
+describe('Neek', function (){
+
+  var without_dups;
+
+  before(function (start){
+    fs.readFile('./test/resources/lines_without_dups.txt', function (err, file){
+      if(err){
+        return start(err);
+      }
+      without_dups = file.toString();
+      start();
+    });
+  });
+
+  it('filters out duplicates', function (next){
+    var neek = new Neek({
+      input: fs.createReadStream(dup_file),
+      output: 'string'
+    });
+
+    neek.unique(function (result){
+      should(result).be.ok;
+      should(result.output).be.ok;
+      should(result.output).eql(without_dups);
+
+      next();
+    });
+  });
+
+  it('handles with String output', function(next){
+    var neek = new Neek({
+      input: fs.createReadStream(dup_file),
+      output: '.tmp/first_output_without_dups.txt'
+    });
+
+    neek.unique(function (result){
+      should(result).be.ok;
+      should(result.total).be.ok;
+      should(result.unique).be.ok;
+      should(result.total).eql(13);
+      should(result.unique).eql(8);
+
+      next();
+    });
+  });
+
+  it('handles with Stream output', function(next){
+    var neek = new Neek({
+      input: fs.createReadStream(dup_file),
+      output: fs.createWriteStream('.tmp/second_output_without_dups.txt')
+    });
+
+    neek.unique(function (result){
+      should(result).be.ok;
+      should(result.total).be.ok;
+      should(result.unique).be.ok;
+      should(result.total).eql(13);
+      should(result.unique).eql(8);
+
+      next();
+    });
+  });
+
+  it('functions without a callback', function (start){
+    var path = '.tmp/third_output_without_dups.txt';
+
+    var neek = new Neek({
+      input: fs.createReadStream(dup_file),
+      output: fs.createWriteStream(path)
+    });
+
+    neek.unique();
+
+    setTimeout(function (){
+
+      fs.readFile(path, function (err, content){
+        should(err).not.be.ok;
+        should(content).be.ok;
+        should(content.toString()).eql(without_dups);
         start();
+      });
+
+    }, 250);
+  });
+
+  it('is usable via command line', function (next){
+    var child = spawn('./bin/neek', ['--input', dup_file]);
+    var data = '';
+
+    child.stdout.on('data', function (d){
+      data += d.toString();
     });
 
-    describe('filters out duplicates', function(){
-
-        it('using the MD5 algorithm', function(next){
-
-            new Neek()
-                .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput('string')
-                .unique('md5', function(result){
-                    assert.strictEqual(result.output, without_dups);
-                    next();
-                });
-
-        });
-
-        it('using the SHA-1 algorithm', function(next){
-
-            new Neek()
-                .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput('string')
-                .unique(function(result){
-                    assert.strictEqual(result.output, without_dups);
-                    next();
-                });
-
-        });
-
-        it('using the SHA-256 algorithm', function(next){
-
-            new Neek()
-                .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput('string')
-                .unique('sha256', function(result){
-                    assert.strictEqual(result.output, without_dups);
-                    next();
-                });
-
-        });
-
-        it('using the SHA-512 algorithm', function(next){
-
-            new Neek()
-                .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput('string')
-                .unique('sha512', function(result){
-                    assert.strictEqual(result.output, without_dups);
-                    next();
-                });
-
-        });
-
+    child.stderr.on('data', function (data) {
+      should(data).not.be.ok;
     });
 
-    describe('handles unexpected situations', function(){
-
-        it('by throwing errors if an input stream type is missing', function(next){
-
-            try {
-                new Neek()
-                    .setOutput('string')
-                    .unique('sha512', function (result) {
-                        assert.strictEqual(result.output, without_dups);
-                        next(new Error('No error thrown!'));
-                    });
-            } catch(e) {
-                assert(e.message === 'No input stream specified!');
-                next();
-            }
-
-        });
-
-        it('by throwing errors if an output stream type is missing', function(next){
-
-            try {
-                new Neek()
-                    .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                    .unique('sha512', function (result) {
-                        assert.strictEqual(result.output, without_dups);
-                        next(new Error('No error thrown!'));
-                    });
-            } catch(e) {
-                assert(e.message === 'No output format specified!');
-                next();
-            }
-
-        });
-
-        it('by handling cases with no arguments', function(next){
-            new Neek()
-                .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-                .setOutput(fs.createWriteStream('./test/resources/output_without_dups.txt'))
-                .unique();
-
-            next();
-        });
-
+    child.stdout.on('end', function (){
+      should(data).eql(without_dups);
+      next();
     });
+  });
 
-    describe('command line interface', function(){
+  it('throws an error if an input stream type is missing', function (next){
 
-        it('should write out to a stream', function(next){
-            setTimeout(function(){
-                var testFile = fs.readFileSync('./test/resources/output_without_dups.txt').toString();
-                assert.equal(testFile, without_dups);
-                next();
-            }, 200);
-        });
+    try {
+      var neek = new Neek({
+        output: 'string'
+      });
 
-        it('should be usable via command line', function(next){
+      neek.unique(function (result){
+        should(result).be.ok;
+        should(result.output).be.ok;
+        should(result.output).eql(without_dups);
 
-            var cmd = path.join(__dirname, '../bin/neek'),
-                resource = path.join(__dirname, './resources/');
+        next(new Error('No error thrown!'));
+      });
+    } catch(e) {
+      should(e.message).eql('No input stream specified!');
+      next();
+    }
 
-            exec(cmd + ' --input ' + resource + 'lines_with_dups.txt', function(err, stdout, stderr){
-                assert(!err, err);
-                assert(!stderr);
-                assert.equal(stdout, without_dups + '\nProcessing complete: 13 -> 8\n');
-                next();
-            });
+  });
 
-        });
+  it('throws an error if an output stream type is missing', function (next){
 
-    });
+    try {
+      var neek = new Neek({
+        input: fs.createReadStream(dup_file)
+      });
+
+      neek.unique(function (result){
+        should(result).be.ok;
+        should(result.output).be.ok;
+        should(result.output).eql(without_dups);
+
+        next(new Error('No error thrown!'));
+      });
+    } catch(e) {
+      should(e.message).eql('No output stream specified!');
+      next();
+    }
+
+  });
 
 });

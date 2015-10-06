@@ -1,13 +1,15 @@
-Neek [![Build Status](https://travis-ci.org/iwhitfield/neek.svg?branch=master)](https://travis-ci.org/iwhitfield/neek) [![Code Climate](https://codeclimate.com/github/iwhitfield/neek/badges/gpa.svg)](https://codeclimate.com/github/iwhitfield/neek) [![Test Coverage](https://codeclimate.com/github/iwhitfield/neek/badges/coverage.svg)](https://codeclimate.com/github/iwhitfield/neek)
+Neek [![Build Status](https://travis-ci.org/zackehh/neek.svg?branch=master)](https://travis-ci.org/zackehh/neek) [![Code Climate](https://codeclimate.com/github/zackehh/neek/badges/gpa.svg)](https://codeclimate.com/github/zackehh/neek) [![Test Coverage](https://codeclimate.com/github/zackehh/neek/badges/coverage.svg)](https://codeclimate.com/github/zackehh/neek)
 ====
 
 A simple way to filter duplicate lines from a list, à la uniq. Takes an input and filters to an output removing duplicates.
 
 ### Compatibility ###
 
-This module is built on each commit with TravisCI on Node 0.8.x, 0.10.x and 0.11.x. It will *not* work on Node 0.6.x unfortunately. In order to maintain support throughout these versions, the [Hashes](https://npmjs.org/package/hashes "Hashes") library is used. There are more efficient alternatives (perhaps a gaining a second per 100,000 records), however they have native components and are unstable on 0.11.x at the moment. At some point in future, I'll revisit this and implement a better HashSet - perhaps when 0.12.x is live.
+the current version of `Neek` is designed using several features of `ES6`; namely the `Set` interface. If this is not available, it will fall back to a library interface which is not as fast (but it's still pretty good). As such, best performance occurs when on `Node >= v4.0.0` and all numbers in this README will refer to this version.
 
-Build results are sent over to [Code Climate](https://codeclimate.com/github/iwhitfield/neek) for analysis.
+Neek is built on Travis against the latest version of Node, Node 0.12.x and Node 0.10.x. Older versions of Node are not supported, however Neek was functional on 0.8.x with version `0.2.2` (admittedly with slower performance).
+
+Build results are sent over to [Code Climate](https://codeclimate.com/github/zackehh/neek) for analysis.
 
 ### Setup ###
 
@@ -28,15 +30,14 @@ $ npm install neek
 As mentioned, there are two ways to use Neek. The first use, and probably the most common, is simply invoking via a shell, or using inside a shell to remove duplicate lines:
 
 ```
-$ neek --input dup_file.txt > output.txt
+$ neek --input dup_file.txt -o output.txt
 
-$ cat dup_file.txt | neek > output.txt
+$ cat dup_file.txt | neek -o output.txt
 ```
 
 The shell version takes these parameters:
 
 ```
--a, --algorithm     the cipher algorithm to use (default to SHA1)
 -i, --input         an input file to process
 -o, --output        a file to output to
 -q, --quiet         only output the processed data
@@ -47,15 +48,19 @@ The other use is from within a Node module which requires some processing to out
 ```
 var Neek = require('neek);
 
-new Neek()
-    .setInput(fs.createReadStream('./test/resources/lines_with_dups.txt'))
-    .setOutput(fs.createWriteStream('./test/resources/output_without_dups.txt'))
-    .unique('md5', function(result){
+var neek = new Neek({
+  input: fs.createReadStream('./test/resources/lines_with_dups.txt'),
+  output: fs.createWriteStream('./test/resources/output_without_dups.txt');
+});
 
-    });
+neek.unique(function(result){
+  console.log(result);
+});
 ```
 
-You can use `setInput()` and `setOutput()` to define your streams. You then call `unique()` to actually remove the duplicate data. `setOutput()` can take a parameter "string", which will pass the output to the callback as described below. `unique()` can take an optional algorithm param (defaulting to SHA1), and a callback function which is passed a result object.
+You can use the constructor to define your streams. You then call `unique()` to actually remove the duplicate data. `output` can take a parameter "string", which will pass the output to the callback as described below. `unique()` can take an optional algorithm param (defaulting to SHA1), and a callback function which is passed a result object.
+
+If you pass a String type to `output` (which `!== 'string'`) it will be wrapped up in a write stream, assuming it is a file path.
 
 This object contains three fields; output, size and count. These fields translate to the following:
 
@@ -67,30 +72,16 @@ unique  - the final amount of lines (without duplicate data)
 
 ### Comparison ###
 
-On a test set of a 293MB file containing 576,905 total lines with 322,392 unique lines, below is a comparison of the performance of Unix tool `uniq` and `neek`. This is assuming that your data is sorted.
+On a test set of a 527MB file containing 1,071,367 total lines with 443,917 unique lines, below is a comparison of the performance of Unix tools `uniq` and `sort`, and then `neek`. `uniq` is assuming that your data is sorted.
 
 **Uniq**
 
 ```
-$ time uniq test-set.txt
+$ time uniq test-set.txt > deduplicated.txt
 
-# output
-
-real	0m33.951s
-user	0m27.086s
-sys     0m2.161s
-```
-
-**Neek**
-
-```
-$ time bin/neek --input test-set.txt
-
-# output
-
-real	0m16.354s
-user	0m13.733s
-sys     0m2.217s
+real	0m38.922s
+user	0m37.647s
+sys	    0m1.105s
 ```
 
 In the unfortunately case that your data isn't sorted, you would have to use `sort`, however Neek behaves the same regardless of order.
@@ -98,35 +89,45 @@ In the unfortunately case that your data isn't sorted, you would have to use `so
 **Sort**
 
 ```
-$ time sort -u test-set.txt
+$ time sort -u test-set.txt > deduplicated.txt
 
-# output
-
-real	1m39.203s
-user	1m32.484s
-sys     0m1.518s
+real	2m16.459s
+user	2m13.757s
+sys	    0m2.186s
 ```
 
-As you can see, Neek is roughly 45% faster to run than Uniq and almost 85% faster to run than Sort, meaning it's invaluable for larger files.
+Now let's look at Neek!
+
+**Neek**
+
+```
+$ time bin/neek --input test-set.txt -o deduplicated.txt
+
+real	0m9.581s
+user	0m8.615s
+sys	    0m1.588s
+```
+
+As you can see, Neek is ~4.1x (around 400%) faster to run than `uniq` and ~14.2x (around 1400%) faster to run than `sort`, meaning it's invaluable for larger files. Aside from being far faster Neek uses efficient pipes, which is far better for memory usage. Tools like `sort` will buffer the entire file into memory, making it a bad choice for large files.
 
 ### Redirection ###
 
-One important thing to note here is that a shell redirection is slightly faster than using the `--output` flag. In the processing of the above file, the `--output` flag took an extra 9 seconds due to the overheads inside Node.
+On versions **prior** to Node v4.x one important thing to note is that a shell redirection is slightly faster than using the `--output` flag. In the processing of the above file, the `--output` flag took an extra 9 seconds due to the overheads inside Node.
 
 Where possible, I would recommend simply using a shell redirection. If you do use a redirection, make sure to pass `-q`. Here is a comparison:
 
 ```
-$ time bin/neek --input test-set.txt -q > output.txt
+$ time bin/neek --input test-set.txt -q > deduplicated.txt
 
-real	0m16.354s
-user	0m13.733s
-sys     0m2.217s
+real	0m19.928s
+user	0m16.596s
+sys	    0m3.653s
 
-$ time bin/neek --input test-set.txt --output output.txt
+$ time bin/neek --input test-set.txt --output deduplicated.txt
 
-Processing complete: 576905 -> 322392
-
-real	0m25.744s
-user	0m14.974s
-sys     0m6.657s
+real	0m30.536s
+user	0m22.242s
+sys	    0m10.883s
 ```
+
+In post Node v4.x, this is **not** an issue (in fact the situation is almost reversed, shell redirection is far slower).

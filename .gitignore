@@ -29,3 +29,6 @@ coverage.html
 
 # idea
 .idea
+
+# tmp files
+.tmp/*.txt

@@ -1,6 +1,6 @@
 {
   "name": "neek",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "A simple implementation of *nix uniq in NodeJS to take advantage of streaming",
   "author": {
     "name": "Isaac Whitfield",
@@ -23,35 +23,30 @@
     "unique"
   ],
   "scripts": {
-    "coverage": "mocha -r blanket -R html-cov test",
-    "lcov": "mocha -r blanket -R mocha-lcov-reporter",
-    "test": "mocha test"
+    "coverage": "grunt coverage",
+    "lint": "grunt lint",
+    "test": "grunt"
   },
   "bin": {
     "neek": "bin/neek"
   },
   "dependencies": {
+    "farmhash": "1.1.0",
     "hashes": "0.1.3",
     "minimist": "1.1.0",
-    "readable-stream": "~1.0.0"
+    "readable-stream": "1.0.0"
   },
   "devDependencies": {
-    "blanket": "1.1.6",
-    "codeclimate-test-reporter": "0.0.4",
-    "mocha": "2.1.0",
-    "mocha-lcov-reporter": "0.0.1"
-  },
-  "config": {
-    "blanket": {
-      "data-cover-never": [
-        "node_modules",
-        "test"
-      ],
-      "pattern": [
-        "lib/neek.js",
-        "lib/reader.js",
-        "lib/stream.js"
-      ]
-    }
+    "codeclimate-test-reporter": "0.1.1",
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-clean": "0.6.0",
+    "grunt-contrib-jshint": "0.11.3",
+    "grunt-mocha-istanbul": "3.0.1",
+    "grunt-mocha-test": "0.12.7",
+    "istanbul": "0.3.22",
+    "jshint": "2.8.0",
+    "mocha": "2.3.3",
+    "should": "7.1.0"
   }
 }
