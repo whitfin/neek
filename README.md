@@ -1,4 +1,4 @@
-Neek [![Build Status](https://travis-ci.org/zackehh/neek.svg?branch=master)](https://travis-ci.org/zackehh/neek) [![Code Climate](https://codeclimate.com/github/iwhitfield/neek/badges/gpa.svg)](https://codeclimate.com/github/iwhitfield/neek) [![Test Coverage](https://codeclimate.com/github/iwhitfield/neek/badges/coverage.svg)](https://codeclimate.com/github/iwhitfield/neek)
+Neek [![Build Status](https://travis-ci.org/zackehh/neek.svg?branch=master)](https://travis-ci.org/zackehh/neek) [![Code Climate](https://codeclimate.com/github/zackehh/neek/badges/gpa.svg)](https://codeclimate.com/github/zackehh/neek) [![Test Coverage](https://codeclimate.com/github/zackehh/neek/badges/coverage.svg)](https://codeclimate.com/github/zackehh/neek)
 ====
 
 A simple way to filter duplicate lines from a list, à la uniq. Takes an input and filters to an output removing duplicates.
@@ -48,19 +48,18 @@ The other use is from within a Node module which requires some processing to out
 Please note that `input`/`output` accept either a String path or a Stream.
 
 ```
-var Neek = require('neek);
+var neek = require('neek);
 
-var neek = new Neek({
-  input: './test/resources/lines_with_dups.txt',
-  output: './test/resources/output_without_dups.txt';
-});
+var readable = './test/resources/lines_with_dups.txt';
+var writable = './test/resources/output_without_dups.txt';
 
-neek.unique(function(result){
+// unique(input, output[, callback])
+neek.unique(readable, writable, function(result){
   console.log(result);
 });
 ```
 
-You can use the constructor to define your streams. You then call `unique()` to actually remove the duplicate data. `output` can take a parameter "string", which will pass the output to the callback as described below. `unique()` can take an optional algorithm param (defaulting to SHA1), and a callback function which is passed a result object.
+You can use the constructor to define your streams. You then call `unique()` to actually remove the duplicate data. `output` can take a parameter "string", which will pass the output to the callback as described below. `unique()` can take an optional callback function which is passed a result object.
 
 If you pass a String type to either `input` or `output` (which `!== 'string'`) it will be wrapped up in a read/write stream, with the assumption that it is a file path.
 

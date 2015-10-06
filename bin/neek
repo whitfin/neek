@@ -1,24 +1,16 @@
 #!/usr/bin/env node
 var args = require('minimist')(process.argv.slice(2));
 var fs = require('fs');
-var Neek = require('../index');
+var neek = require('../index');
 
 var input = args.i || args.input;
 var output = args.o || args.output;
 var quiet = args.q || args.quiet;
 
-var uniquer = new Neek({
-  input: input ? fs.createReadStream(input) : process.stdin,
-  output: output ? fs.createWriteStream(output) : process.stdout
-});
+var readable = input ? fs.createReadStream(input) : process.stdin;
+var writable = output ? fs.createWriteStream(output) : process.stdout;
 
-if(args.algorithm){
-  uniquer.unique(args.algorithm, handler);
-} else {
-  uniquer.unique(handler);
-}
-
-function handler(result){
+neek.unique(readable, writable, function handler(result){
   if(!quiet){
     var msg = '\nProcessing complete: ' + result.total + ' -> ' + result.unique;
     if(!output){
@@ -27,4 +19,4 @@ function handler(result){
     console.log(msg);
   }
   process.exit();
-}
+});

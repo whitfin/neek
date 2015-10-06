@@ -2,7 +2,7 @@ var fs = require('fs');
 var should = require('should');
 var spawn = require('child_process').spawn;
 
-var Neek = require('../index');
+var neek = require('../index');
 
 var dup_file = './test/resources/lines_with_dups.txt';
 
@@ -21,12 +21,7 @@ describe('Neek', function (){
   });
 
   it('filters out duplicates', function (next){
-    var neek = new Neek({
-      input: fs.createReadStream(dup_file),
-      output: 'string'
-    });
-
-    neek.unique(function (result){
+    neek.unique(fs.createReadStream(dup_file), 'string', function (result){
       should(result).be.ok;
       should(result.output).be.ok;
       should(result.output).eql(without_dups);
@@ -36,12 +31,7 @@ describe('Neek', function (){
   });
 
   it('handles with String output', function(next){
-    var neek = new Neek({
-      input: fs.createReadStream(dup_file),
-      output: 'tmp/first_output_without_dups.txt'
-    });
-
-    neek.unique(function (result){
+    neek.unique(dup_file, 'tmp/first_output_without_dups.txt', function (result){
       should(result).be.ok;
       should(result.total).be.ok;
       should(result.unique).be.ok;
@@ -53,12 +43,10 @@ describe('Neek', function (){
   });
 
   it('handles with Stream output', function(next){
-    var neek = new Neek({
-      input: fs.createReadStream(dup_file),
-      output: fs.createWriteStream('tmp/second_output_without_dups.txt')
-    });
+    var readable = fs.createReadStream(dup_file);
+    var writable = fs.createWriteStream('tmp/second_output_without_dups.txt');
 
-    neek.unique(function (result){
+    neek.unique(readable, writable, function (result){
       should(result).be.ok;
       should(result.total).be.ok;
       should(result.unique).be.ok;
@@ -72,12 +60,7 @@ describe('Neek', function (){
   it('functions without a callback', function (start){
     var path = 'tmp/third_output_without_dups.txt';
 
-    var neek = new Neek({
-      input: fs.createReadStream(dup_file),
-      output: fs.createWriteStream(path)
-    });
-
-    neek.unique();
+    neek.unique(fs.createReadStream(dup_file), fs.createWriteStream(path));
 
     setTimeout(function (){
 
@@ -112,10 +95,6 @@ describe('Neek', function (){
   it('throws an error if an input stream type is missing', function (next){
 
     try {
-      var neek = new Neek({
-        output: 'string'
-      });
-
       neek.unique(function (result){
         should(result).be.ok;
         should(result.output).be.ok;
@@ -133,11 +112,7 @@ describe('Neek', function (){
   it('throws an error if an output stream type is missing', function (next){
 
     try {
-      var neek = new Neek({
-        input: fs.createReadStream(dup_file)
-      });
-
-      neek.unique(function (result){
+      neek.unique(fs.createReadStream(dup_file), function (result){
         should(result).be.ok;
         should(result.output).be.ok;
         should(result.output).eql(without_dups);
