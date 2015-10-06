@@ -45,12 +45,14 @@ The shell version takes these parameters:
 
 The other use is from within a Node module which requires some processing to output text without duplicates, although I expect this will be less common. Below is an example inside Node:
 
+Please note that `input`/`output` accept either a String path or a Stream.
+
 ```
 var Neek = require('neek);
 
 var neek = new Neek({
-  input: fs.createReadStream('./test/resources/lines_with_dups.txt'),
-  output: fs.createWriteStream('./test/resources/output_without_dups.txt');
+  input: './test/resources/lines_with_dups.txt',
+  output: './test/resources/output_without_dups.txt';
 });
 
 neek.unique(function(result){
@@ -60,7 +62,7 @@ neek.unique(function(result){
 
 You can use the constructor to define your streams. You then call `unique()` to actually remove the duplicate data. `output` can take a parameter "string", which will pass the output to the callback as described below. `unique()` can take an optional algorithm param (defaulting to SHA1), and a callback function which is passed a result object.
 
-If you pass a String type to `output` (which `!== 'string'`) it will be wrapped up in a write stream, assuming it is a file path.
+If you pass a String type to either `input` or `output` (which `!== 'string'`) it will be wrapped up in a read/write stream, with the assumption that it is a file path.
 
 This object contains three fields; output, size and count. These fields translate to the following:
 
