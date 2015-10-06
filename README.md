@@ -1,4 +1,4 @@
-Neek [![Build Status](https://travis-ci.org/zackehh/neek.svg?branch=master)](https://travis-ci.org/zackehh/neek) [![Code Climate](https://codeclimate.com/github/zackehh/neek/badges/gpa.svg)](https://codeclimate.com/github/zackehh/neek) [![Test Coverage](https://codeclimate.com/github/zackehh/neek/badges/coverage.svg)](https://codeclimate.com/github/zackehh/neek)
+Neek [![Build Status](https://travis-ci.org/zackehh/neek.svg?branch=master)](https://travis-ci.org/zackehh/neek) [![Code Climate](https://codeclimate.com/github/iwhitfield/neek/badges/gpa.svg)](https://codeclimate.com/github/iwhitfield/neek) [![Test Coverage](https://codeclimate.com/github/iwhitfield/neek/badges/coverage.svg)](https://codeclimate.com/github/iwhitfield/neek)
 ====
 
 A simple way to filter duplicate lines from a list, à la uniq. Takes an input and filters to an output removing duplicates.
