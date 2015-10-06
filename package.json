@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/iwhitfield/neek.git"
+    "url": "http://github.com/zackehh/neek.git"
   },
   "bugs": {
     "email": "iwhitfield@appcelerator.com",
-    "url": "http://github.com/iwhitfield/neek/issues"
+    "url": "http://github.com/zackehh/neek/issues"
   },
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -33,8 +33,8 @@
   "dependencies": {
     "farmhash": "1.1.0",
     "hashes": "0.1.3",
-    "minimist": "1.1.0",
-    "readable-stream": "1.0.0"
+    "minimist": "1.2.0",
+    "readable-stream": "2.0.2"
   },
   "devDependencies": {
     "grunt": "0.4.5",
