@@ -48,7 +48,7 @@ The other use is from within a Node module which requires some processing to out
 Please note that `input`/`output` accept either a String path or a Stream.
 
 ```
-var neek = require('neek);
+var neek = require('neek');
 
 var readable = './test/resources/lines_with_dups.txt';
 var writable = './test/resources/output_without_dups.txt';
