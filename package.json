@@ -39,7 +39,7 @@
   "devDependencies": {
     "grunt": "0.4.5",
     "grunt-cli": "1.2.0",
-    "grunt-codeclimate-reporter": "1.2.0",
+    "grunt-codeclimate-reporter": "1.1.2",
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-jshint": "1.0.0",
     "grunt-mkdir": "1.0.0",
