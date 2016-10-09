@@ -33,6 +33,7 @@
   "dependencies": {
     "farmhash": "^1.1.1",
     "hashes": "0.1.3",
+    "lodash.isstring": "^4.0.1",
     "minimist": "1.2.0",
     "readable-stream": "2.1.4"
   },
