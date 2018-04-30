@@ -31,24 +31,24 @@
     "neek": "bin/neek"
   },
   "dependencies": {
-    "farmhash": "^1.2.1",
+    "farmhash": "2.1.0",
     "hashes": "0.1.4",
     "lodash.isstring": "4.0.1",
     "minimist": "1.2.0",
-    "readable-stream": "2.1.5"
+    "readable-stream": "2.3.6"
   },
   "devDependencies": {
-    "grunt": "1.0.1",
+    "grunt": "1.0.2",
     "grunt-cli": "1.2.0",
     "grunt-codeclimate-reporter": "1.2.1",
-    "grunt-contrib-clean": "1.0.0",
-    "grunt-contrib-jshint": "1.0.0",
+    "grunt-contrib-clean": "1.1.0",
+    "grunt-contrib-jshint": "1.1.0",
     "grunt-mkdir": "1.0.0",
     "grunt-mocha-istanbul": "5.0.2",
-    "grunt-mocha-test": "0.13.2",
+    "grunt-mocha-test": "0.13.3",
     "istanbul": "0.4.5",
-    "jshint": "2.9.3",
-    "mocha": "3.1.0",
-    "should": "11.1.0"
+    "jshint": "2.9.5",
+    "mocha": "5.1.1",
+    "should": "13.2.1"
   }
 }
