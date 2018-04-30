@@ -1,15 +1,13 @@
-Neek [![Build Status](https://travis-ci.org/zackehh/neek.svg?branch=master)](https://travis-ci.org/zackehh/neek) [![Code Climate](https://codeclimate.com/github/zackehh/neek/badges/gpa.svg)](https://codeclimate.com/github/zackehh/neek) [![Test Coverage](https://codeclimate.com/github/zackehh/neek/badges/coverage.svg)](https://codeclimate.com/github/zackehh/neek)
+Neek [![Build Status](https://travis-ci.org/whitfin/neek.svg?branch=master)](https://travis-ci.org/whitfin/neek) [![Code Climate](https://codeclimate.com/github/whitfin/neek/badges/gpa.svg)](https://codeclimate.com/github/whitfin/neek) [![Test Coverage](https://codeclimate.com/github/whitfin/neek/badges/coverage.svg)](https://codeclimate.com/github/whitfin/neek)
 ====
 
 A simple way to filter duplicate lines from a list, à la uniq. Takes an input and filters to an output removing duplicates.
 
 ### Compatibility ###
 
-the current version of `Neek` is designed using several features of `ES6`; namely the `Set` interface. If this is not available, it will fall back to a library interface which is not as fast (but it's still pretty good). As such, best performance occurs when on `Node >= v4.0.0` and all numbers in this README will refer to this version.
+The current version of `Neek` is designed using several features of `ES6`; namely the `Set` interface. If this is not available, it will fall back to a library interface which is not as fast (but it's still pretty good). As such, best performance occurs when on `Node >= v4.0.0` and all numbers in this README will refer to this version.
 
-Neek is built on Travis against the latest version of Node, Node 0.12.x and Node 0.10.x. Older versions of Node are not supported, however Neek was functional on 0.8.x with version `0.2.2` (admittedly with slower performance).
-
-Build results are sent over to [Code Climate](https://codeclimate.com/github/zackehh/neek) for analysis.
+Build results are sent over to [Code Climate](https://codeclimate.com/github/whitfin/neek) for analysis.
 
 ### Setup ###
 
