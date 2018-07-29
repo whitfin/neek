@@ -1,6 +1,0 @@
-languages:
-  Ruby: true
-  JavaScript: true
-  PHP: true
-exclude_paths:
-- "Gruntfile.js"

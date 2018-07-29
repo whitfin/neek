@@ -1,13 +1,11 @@
-Neek [![Build Status](https://travis-ci.org/whitfin/neek.svg?branch=master)](https://travis-ci.org/whitfin/neek) [![Code Climate](https://codeclimate.com/github/whitfin/neek/badges/gpa.svg)](https://codeclimate.com/github/whitfin/neek) [![Test Coverage](https://codeclimate.com/github/whitfin/neek/badges/coverage.svg)](https://codeclimate.com/github/whitfin/neek)
-====
+# Neek
+[![Build Status](https://travis-ci.org/whitfin/neek.svg?branch=master)](https://travis-ci.org/whitfin/neek)
 
 A simple way to filter duplicate lines from a list, à la uniq. Takes an input and filters to an output removing duplicates.
 
 ### Compatibility ###
 
 The current version of `Neek` is designed using several features of `ES6`; namely the `Set` interface. If this is not available, it will fall back to a library interface which is not as fast (but it's still pretty good). As such, best performance occurs when on `Node >= v4.0.0` and all numbers in this README will refer to this version.
-
-Build results are sent over to [Code Climate](https://codeclimate.com/github/whitfin/neek) for analysis.
 
 ### Setup ###
 
