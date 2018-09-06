@@ -35,7 +35,7 @@ describe('Neek', function (){
       should(result).be.ok;
       should(result.total).be.ok;
       should(result.unique).be.ok;
-      should(result.total).eql(13);
+      should(result.total).eql(14);
       should(result.unique).eql(8);
 
       next();
@@ -50,7 +50,7 @@ describe('Neek', function (){
       should(result).be.ok;
       should(result.total).be.ok;
       should(result.unique).be.ok;
-      should(result.total).eql(13);
+      should(result.total).eql(14);
       should(result.unique).eql(8);
 
       next();
@@ -83,7 +83,7 @@ describe('Neek', function (){
       should(result).be.ok;
       should(result.total).be.ok;
       should(result.unique).be.ok;
-      should(result.total).eql(13);
+      should(result.total).eql(14);
       should(result.unique).eql(8);
 
       global.Set = stored_set;
