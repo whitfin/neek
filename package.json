@@ -35,19 +35,19 @@
     "hashes": "0.1.4",
     "lodash.isstring": "4.0.1",
     "minimist": "1.2.0",
-    "readable-stream": "2.3.6"
+    "readable-stream": "3.3.0"
   },
   "devDependencies": {
-    "grunt": "1.0.3",
-    "grunt-cli": "1.2.0",
-    "grunt-contrib-clean": "1.1.0",
-    "grunt-contrib-jshint": "1.1.0",
+    "grunt": "1.0.4",
+    "grunt-cli": "1.3.2",
+    "grunt-contrib-clean": "2.0.0",
+    "grunt-contrib-jshint": "2.1.0",
     "grunt-mkdir": "1.0.0",
     "grunt-mocha-istanbul": "5.0.2",
     "grunt-mocha-test": "0.13.3",
     "istanbul": "0.4.5",
-    "jshint": "2.9.5",
-    "mocha": "5.2.0",
-    "should": "13.2.2"
+    "jshint": "2.10.2",
+    "mocha": "6.1.4",
+    "should": "13.2.3"
   }
 }
